@@ -12,6 +12,8 @@ var flash    = require('connect-flash');
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('./config'); // get our config file
 var User   = require('./app/models/user'); // get our mongoose model
+var Posts   = require('./app/models/posts'); // get our mongoose model
+var Channels   = require('./app/models/channel'); // get our mongoose model
 
 // =================================================================
 // configuration ===================================================
@@ -73,7 +75,9 @@ app.use(morgan('dev'));
 // });
 
 
-
+/**
+ *
+ */
 app.post('/register',urlencodedParser, function (req,res) {
 
 	var user = new User({
@@ -81,7 +85,7 @@ app.post('/register',urlencodedParser, function (req,res) {
 		name: req.body.name,
 		password: req.body.password,
 		//admin:false,
-        groups:[],
+        // groups:[],
 		// tokenF:req.body.token,
 		// profile_id:req.body.profile_id,
         // countOfProjects: 0
@@ -142,7 +146,7 @@ apiRoutes.post('/authenticate', urlencodedParser,function(req, res) {
 				// create a token
 				console.log(user)
 				token = jwt.sign(user, app.get('superSecret'), {
-					expiresIn: 86400000 // expires in 24 hours
+					expiresIn: 864000000000000000000 // expires in 24 hours
 				});
 
 				res.json({
@@ -213,6 +217,7 @@ apiRoutes.get('/users', function(req, res) {
 		res.json(users);
 	});
 });
+
 
 apiRoutes.get('/check', function(req, res) {
 	res.json(req.decoded);
@@ -288,3 +293,4 @@ app.use('/api', apiRoutes);
 // =================================================================
 app.listen(port);
 console.log('Magic happens at http://localhost:' + port);
+
