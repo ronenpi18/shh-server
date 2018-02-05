@@ -12,7 +12,6 @@ module.exports = mongoose.model('User', new Schema({
     tokenF:String,
     profile_id:{
         type:String,
-        unique: true
 	},
 	subsChannels: Array,
 	myChannels:Array,
