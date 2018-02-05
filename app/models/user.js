@@ -10,9 +10,7 @@ module.exports = mongoose.model('User', new Schema({
     },
 	password: String,
     tokenF:String,
-    profile_id:{
-        type:String,
-	},
+    profile_id: String,
 	subsChannels: Array,
 	myChannels:Array,
 	img_url:String

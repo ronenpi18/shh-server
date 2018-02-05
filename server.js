@@ -96,7 +96,9 @@ app.post('/register',urlencodedParser, function (req,res) {
     	user.tokenF = req.body.tokenF
 		user.profile_id = req.body.profile_id;
     	user.password = null;
-    }
+    }else{
+    	user.profile_id = "0"
+	}
 	user.save(function(err) {
 
         if (err) {
