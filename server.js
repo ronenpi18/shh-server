@@ -14,11 +14,13 @@ var config = require('./config'); // get our config file
 var User   = require('./app/models/user'); // get our mongoose model
 var Posts   = require('./app/models/posts'); // get our mongoose model
 var Channels   = require('./app/models/channel'); // get our mongoose model
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 // =================================================================
 // configuration ===================================================
 // =================================================================
-var port = process.env.PORT || 8081; // used to create, sign, and verify tokens
+var port = process.env.PORT || 8082; // used to create, sign, and verify tokens
 mongoose.connect(config.database); // connect to database
 app.set('superSecret', config.secret); // secret variable
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -99,6 +101,7 @@ app.post('/register',urlencodedParser, function (req,res) {
 
         if (err) {
         	res.send({error:"check your details, it might be your email is already exists"})
+			console.log(err)
 		}
 		else{
 
@@ -291,6 +294,14 @@ app.use('/api', apiRoutes);
 // =================================================================
 // start the server ================================================
 // =================================================================
-app.listen(port);
+io.on('connection', function(client) {
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+
+
+server.listen(port);
 console.log('Magic happens at http://localhost:' + port);
 
