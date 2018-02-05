@@ -97,7 +97,7 @@ app.post('/register',urlencodedParser, function (req,res) {
 		user.profile_id = req.body.profile_id;
     	user.password = null;
     }else{
-    	user.profile_id = "0"
+
 	}
 	user.save(function(err) {
 
@@ -304,6 +304,6 @@ io.on('connection', function(client) {
     });
 
 });
-server.listen(port);
+app.listen(port);
 console.log('Magic happens at http://localhost:' + port);
 
